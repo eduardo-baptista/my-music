@@ -6,7 +6,7 @@ namespace MyMusic.Data
 {
   public class MyMusicDbContext : DbContext
   {
-    protected MyMusicDbContext(DbContextOptions<MyMusicDbContext> options) : base(options)
+    public MyMusicDbContext(DbContextOptions<MyMusicDbContext> options) : base(options)
     {
     }
 
