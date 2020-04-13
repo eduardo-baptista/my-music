@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MyMusic.Api.Resources;
-using MyMusic.Api.Validators;
 using MyMusic.Core.Models;
 using MyMusic.Core.Services;
 
@@ -43,11 +42,6 @@ namespace MyMusic.Api.Controllers
     [HttpPost]
     public async Task<ActionResult<ArtistResource>> CreateArtist(SaveArtistResource saveArtistResource)
     {
-      var validator = new SaveArtistResourceValidator();
-      var validationResult = await validator.ValidateAsync(saveArtistResource);
-
-      if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
-
       var artistToCreate = _mapper.Map<SaveArtistResource, Artist>(saveArtistResource);
 
       var newArtist = await _artistService.CreateArtist(artistToCreate);
@@ -62,11 +56,6 @@ namespace MyMusic.Api.Controllers
     [HttpPut("{id}")]
     public async Task<ActionResult<ArtistResource>> UpdateArtist(int id, SaveArtistResource saveArtistResource)
     {
-      var validator = new SaveArtistResourceValidator();
-      var validationResult = await validator.ValidateAsync(saveArtistResource);
-
-      if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
-
       var artistToBeUpdated = await _artistService.GetArtistById(id);
 
       if (artistToBeUpdated == null) return NotFound();

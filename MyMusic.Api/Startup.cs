@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,10 @@ namespace MyMusic.Api
         });
       });
 
-      services.AddControllers();
+      services.AddControllers().AddFluentValidation(config =>
+      {
+        config.RegisterValidatorsFromAssemblyContaining<Startup>();
+      });
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddTransient<IMusicService, MusicService>();
       services.AddTransient<IArtistService, ArtistService>();
