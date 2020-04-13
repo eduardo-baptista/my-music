@@ -2,6 +2,16 @@
 
 A simple ASP.NET Core app build to pratic most used patterns and multi layer.
 
+## Techs
+
+This project was made with the following technologies:
+
+- [ASP.NET Core 3.1](https://dotnet.microsoft.com/)
+- [EF Core](https://docs.microsoft.com/pt-br/ef/#pivot=efcore)
+- [AutoMapper](https://automapper.org/)
+- [FluentValidation](https://fluentvalidation.net/)
+- [Swagger](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
+
 ## Launch
 
 To launch the app just clone and exec the follow comands inside the project folder:
