@@ -73,7 +73,6 @@ namespace MyMusic.Api
         endpoints.MapControllers();
       });
 
-
       // swagger config
       app.UseSwagger();
       app.UseSwaggerUI(config =>

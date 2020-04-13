@@ -1,0 +1,26 @@
+version: "3.6"
+
+services:
+  mymusic-api:
+    build: .
+    container_name: mymusic-api
+    ports:
+      - "5000:80"
+    depends_on:
+      - mymusic-db
+
+  mymusic-db:
+    image: postgres
+    container_name: mymusic-db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=mymusic
+    volumes:
+      - mymusic_db_data:/var/lib/postgres/data
+
+volumes:
+  mymusic_db_data:
