@@ -1,18 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using MyMusic.Core;
+using MyMusic.Core.Services;
 using MyMusic.Data;
+using MyMusic.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MyMusic.Api
 {
@@ -37,8 +36,18 @@ namespace MyMusic.Api
       });
 
       services.AddControllers();
-
       services.AddScoped<IUnitOfWork, UnitOfWork>();
+      services.AddTransient<IMusicService, MusicService>();
+      services.AddTransient<IArtistService, ArtistService>();
+
+      // auto mapper injection
+      services.AddAutoMapper(typeof(Startup));
+
+      // swagger options
+      services.AddSwaggerGen(options =>
+      {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Music", Version = "v1" });
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +67,15 @@ namespace MyMusic.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+      });
+
+
+      // swagger config
+      app.UseSwagger();
+      app.UseSwaggerUI(config =>
+      {
+        config.RoutePrefix = "docs";
+        config.SwaggerEndpoint("/swagger/v1/swagger.json", "My Music V1");
       });
     }
   }
